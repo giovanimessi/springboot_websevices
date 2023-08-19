@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,9 +33,9 @@ public class User  implements Serializable{
 	private String phone;
 	private String password;
 	
-	
-	@OneToMany(mappedBy = "users")
-	private List<Pedido> client = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "client")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	
 	
@@ -102,7 +104,7 @@ public class User  implements Serializable{
 	}
 	
 	public List<Pedido> getPedidos() {
-		return client;
+		return pedidos;
 	}
 	
 

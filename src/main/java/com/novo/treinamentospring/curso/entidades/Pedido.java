@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.RSocket.Client;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,12 +29,13 @@ public class Pedido  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
+
 	//muitos para 1
 	@ManyToOne
-	@JoinColumn(name = "users_id")
-	private User users;
+	@JoinColumn(name = "client_id")
+	private User client;
 
 
 	public Pedido() {
@@ -37,11 +43,11 @@ public class Pedido  implements Serializable{
 	}
 
 
-	public Pedido(Long id, Instant moment, User users) {
+	public Pedido(Long id, Instant moment, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
-		this.users = users;
+		this.client = client;
 	}
 
 
@@ -65,19 +71,19 @@ public class Pedido  implements Serializable{
 	}
 
 
-	public User getUsers() {
-		return users;
+	public User getClient() {
+		return client;
 	}
 
 
-	public void setUsers(User users) {
-		this.users = users;
+	public void setClient(User client) {
+		this.client = client;
 	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(client, id, moment);
 	}
 
 
@@ -90,11 +96,10 @@ public class Pedido  implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(client, other.client) && Objects.equals(id, other.id)
+				&& Objects.equals(moment, other.moment);
 	}
-	
-	
-	
-
+    
+     
 
 }
