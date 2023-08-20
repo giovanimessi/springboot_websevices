@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.integration.IntegrationProperties.
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.novo.treinamentospring.curso.entidades.enums.OrderStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +32,7 @@ public class Pedido  implements Serializable{
 	private Long id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
+    private Integer orderstatus;
 
 	//muitos para 1
 	@ManyToOne
@@ -43,10 +45,12 @@ public class Pedido  implements Serializable{
 	}
 
 
-	public Pedido(Long id, Instant moment, User client) {
+	public Pedido(Long id, Instant moment,OrderStatus orderstatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderstatus(orderstatus);
+		
 		this.client = client;
 	}
 
@@ -71,6 +75,19 @@ public class Pedido  implements Serializable{
 	}
 
 
+	public OrderStatus getOrderstatus() {
+		return OrderStatus.valueOf(orderstatus);
+	}
+
+
+	public void setOrderstatus(OrderStatus orderstatus) {
+		if(orderstatus != null) {
+		this.orderstatus = orderstatus.getCode();
+		
+		}
+	}
+
+
 	public User getClient() {
 		return client;
 	}
@@ -83,7 +100,7 @@ public class Pedido  implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(client, id, moment);
+		return Objects.hash(id);
 	}
 
 
@@ -96,10 +113,10 @@ public class Pedido  implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		return Objects.equals(client, other.client) && Objects.equals(id, other.id)
-				&& Objects.equals(moment, other.moment);
+		return Objects.equals(id, other.id);
 	}
-    
+
      
 
-}
+
+	}
