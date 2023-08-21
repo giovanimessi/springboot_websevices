@@ -3,9 +3,13 @@ package com.novo.treinamentospring.curso.services;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.novo.treinamentospring.curso.entidades.Product;
 import com.novo.treinamentospring.curso.repository.ProductRepository;
 
+
+@Service
 public class ProductServices {
 	
 	
