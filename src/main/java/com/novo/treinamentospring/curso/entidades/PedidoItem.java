@@ -2,6 +2,7 @@ package com.novo.treinamentospring.curso.entidades;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.novo.treinamentospring.curso.entidades.pk.PedidoItemPK;
 
 import jakarta.persistence.EmbeddedId;
@@ -18,11 +19,10 @@ public class PedidoItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private PedidoItemPK id;
+	private PedidoItemPK id = new PedidoItemPK();
 	
 	private Integer quantity;
 	private Double price;
-	
 	
 	public PedidoItem() {
 		super();
@@ -36,7 +36,7 @@ public class PedidoItem implements Serializable {
 		this.quantity = quantity;
 		this.price = price;
 	}
-	
+	@JsonIgnore
 	public Pedido getPedido(){
 
 		return id.getPedido();
