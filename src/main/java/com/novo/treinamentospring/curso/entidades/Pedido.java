@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.novo.treinamentospring.curso.entidades.enums.OrderStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -44,11 +46,16 @@ public class Pedido  implements Serializable{
 	
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<PedidoItem> items = new HashSet<>();
-
-
-	public Pedido() {
-		super();
-	}
+	
+	
+	//mapeado para ter o memso a  id
+	@OneToOne(mappedBy = "pedido",cascade = CascadeType.ALL)
+	
+      private Payment payment;
+     
+    	public Pedido() {
+    		super();
+    	}
 
 
 	public Pedido(Long id, Instant moment,OrderStatus orderstatus, User client) {
@@ -103,10 +110,32 @@ public class Pedido  implements Serializable{
 		this.client = client;
 	}
 	
+
+
 	public Set<PedidoItem>getItems(){
 		return items;
 	}
 	
+	
+	
+
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+	
+	public Double getTotal() {
+		double sum = 0.0;
+		for(PedidoItem x : items) {
+			sum = sum = x.getSubTotal();			
+		}
+		return sum;
+	}
 
 
 	@Override

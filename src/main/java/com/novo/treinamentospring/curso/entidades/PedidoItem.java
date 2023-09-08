@@ -79,6 +79,10 @@ public class PedidoItem implements Serializable {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	public Double getSubTotal() {
+		return price * quantity;
+	}
 
 
 	public PedidoItem(PedidoItemPK id) {

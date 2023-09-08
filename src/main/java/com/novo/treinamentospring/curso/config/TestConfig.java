@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.novo.treinamentospring.curso.entidades.Category;
+import com.novo.treinamentospring.curso.entidades.Payment;
 import com.novo.treinamentospring.curso.entidades.Pedido;
 import com.novo.treinamentospring.curso.entidades.PedidoItem;
 import com.novo.treinamentospring.curso.entidades.Product;
@@ -96,7 +97,12 @@ public class TestConfig implements CommandLineRunner{
 		p5.getCategories().add(cat2);
 
 		productsyRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		
+		Payment pay1 = new Payment(null, Instant.parse("2023-08-20T21:53:07Z"),o1);
+		o1.setPayment(pay1);
 
+		pedidorepository.save(o1);
 	}
 
 }
