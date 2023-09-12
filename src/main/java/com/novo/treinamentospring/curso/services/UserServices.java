@@ -26,5 +26,11 @@ public class UserServices {
 		
 		return listId.get();
 	}
+	
+	public User insert(User obj) {
+		
+		return repository.save(obj);
+		
+	}
 
 }
